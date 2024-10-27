@@ -1,21 +1,31 @@
 <script>
-    import * as Command from "$lib/components/ui/command";
+    import * as Resizable from "$lib/components/ui/resizable";
+    import * as Card from "$lib/components/ui/card";
 </script>
 
-<Command.Root>
-    <Command.Input placeholder="Type a command or search..." />
-    <Command.List>
-      <Command.Empty>No results found.</Command.Empty>
-      <Command.Group heading="Suggestions">
-        <Command.Item>Calendar</Command.Item>
-        <Command.Item>Search Emoji</Command.Item>
-        <Command.Item>Calculator</Command.Item>
-      </Command.Group>
-      <Command.Separator />
-      <Command.Group heading="Settings">
-        <Command.Item>Profile</Command.Item>
-        <Command.Item>Billing</Command.Item>
-        <Command.Item>Settings</Command.Item>
-      </Command.Group>
-    </Command.List>
-  </Command.Root>
+<Resizable.PaneGroup class="h-full" direction="horizontal">
+  <Resizable.Pane class="p-4" defaultSize={25}>
+    <Card.Root>
+      <Card.Header>
+        <Card.Title>My first note</Card.Title>
+        <Card.Description>11:48 PM</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        <p>Card Content</p>
+      </Card.Content>
+    </Card.Root>
+    <Card.Root>
+      <Card.Header>
+        <Card.Title>My first note</Card.Title>
+        <Card.Description>11:48 PM</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        <p>Card Content</p>
+      </Card.Content>
+    </Card.Root>
+  </Resizable.Pane>
+  <Resizable.Handle />
+  <Resizable.Pane class="p-4">
+    <h1 class="text-3xl font-semibold">My first note</h1>
+  </Resizable.Pane>
+</Resizable.PaneGroup>
