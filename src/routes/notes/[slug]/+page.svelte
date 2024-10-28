@@ -1,12 +1,18 @@
 <script lang="ts">
+    
     import * as Resizable from "$lib/components/ui/resizable";
     import * as Card from "$lib/components/ui/card";
     import * as Select from "$lib/components/ui/select";
     import { Button } from "$lib/components/ui/button";
+    import { Textarea } from "$lib/components/ui/textarea";
 
-    import { liveQuery } from "dexie";
-    import { db } from "../db";
+    import type { PageData } from './$types';
+    import { db } from "../../../db";
+
+    export let data: PageData;
+    console.log(data)
     import NotesList from "$lib/components/NotesList.svelte";
+  import { onMount } from "svelte";
 
     async function createNote() {
       const note = await db.notes.add({
@@ -16,9 +22,16 @@
       });
       console.log(note);
     }
-    let notes = liveQuery(
-      () => db.notes.toArray()
-    );
+
+    async function editNote() {
+        await db.notes.update(Number(data.slug), {content: "hi"})
+    }
+
+    let note: Note | undefined;
+
+    onMount(async () => {
+        note = await db.notes.get(Number(data.slug));
+    })
 </script>
 
 <Resizable.PaneGroup class="h-full" direction="horizontal">
@@ -38,6 +51,7 @@
   </Resizable.Pane>
   <Resizable.Handle />
   <Resizable.Pane class="p-4">
-    <h1 class="text-3xl font-semibold">My first note</h1>
+    <h1 class="text-3xl font-semibold">{note?.title}</h1>
+    <Textarea value={note?.content} on:change={async () => await db.notes.update(Number(data.slug), {content: value})} />
   </Resizable.Pane>
 </Resizable.PaneGroup>
