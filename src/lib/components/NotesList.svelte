@@ -12,6 +12,7 @@
 
     {#if $notes}
       {#each $notes as note (note.id)}
+      <a href="/notes/{note.id}">
       <Card.Root>
         <Card.Header>
           <Card.Title>{note.title}</Card.Title>
@@ -21,5 +22,6 @@
           <p>{note.content}</p>
         </Card.Content>
       </Card.Root>
+      </a>
       {/each}
     {/if}

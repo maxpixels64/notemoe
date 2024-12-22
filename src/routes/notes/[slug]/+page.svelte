@@ -6,6 +6,7 @@
     import { Button } from "$lib/components/ui/button";
     import { Textarea } from "$lib/components/ui/textarea";
 
+    import type { Note } from "../../../db";
     import type { PageData } from './$types';
     import { db } from "../../../db";
 
@@ -32,6 +33,11 @@
     onMount(async () => {
         note = await db.notes.get(Number(data.slug));
     })
+
+    let content = note?.content;
+    console.log(note?.content)
+
+    async function changeContent(value: string) { await db.notes.update(Number(data.slug), {content: value}) }
 </script>
 
 <Resizable.PaneGroup class="h-full" direction="horizontal">
@@ -52,6 +58,6 @@
   <Resizable.Handle />
   <Resizable.Pane class="p-4">
     <h1 class="text-3xl font-semibold">{note?.title}</h1>
-    <Textarea value={note?.content} on:change={async () => await db.notes.update(Number(data.slug), {content: value})} />
+    <Textarea bind:value={content} on:change={() => changeContent(content)} />
   </Resizable.Pane>
 </Resizable.PaneGroup>
