@@ -29,15 +29,15 @@
     }
 
     let note: Note | undefined;
+    let content: string | undefined;
 
     onMount(async () => {
         note = await db.notes.get(Number(data.slug));
+        console.log(note);
+        content = note?.content;
     })
 
-    let content = note?.content;
-    console.log(note?.content)
-
-    async function changeContent(value: string) { await db.notes.update(Number(data.slug), {content: value}) }
+    async function changeContent(value: string | undefined) { await db.notes.update(Number(data.slug), {content: value}) }
 </script>
 
 <Resizable.PaneGroup class="h-full" direction="horizontal">
